@@ -1,3 +1,27 @@
+name: "Build kernels"
+
+on:
+  workflow_dispatch:
+    branches:
+      - webpage
+
+jobs:
+  Set-repos:
+    name: " Parse repos.json"
+    runs-on: ubuntu-latest
+    outputs:
+      repos: ${{ steps.generate-matrix.outputs.repos }}
+    steps:
+      - name: " Checkout"
+        uses: actions/checkout@v3
+
+      - name: " Generate Matrix"
+        id: generate-matrix
+        run: |
+          echo "repos<<EOF" >> $GITHUB_OUTPUT
+          cat  ${{ env.CONFIGURATION }} >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+
   Build-Kernel:
     name: " Build kernel"
     runs-on: ubuntu-latest
