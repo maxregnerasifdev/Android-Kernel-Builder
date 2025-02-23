@@ -31,7 +31,8 @@ jobs:
       max-parallel: 2
       fail-fast: false
       matrix:
-        repos: ${{ fromJSON(needs.Set-repos.outputs.repos) }}
+        include:
+          - repos: ${{ needs.Set-repos.outputs.repos }}
     env:
       kernelDir: ${{ matrix.repos.kernelSource.name }}_${{ matrix.repos.kernelSource.device }}
 
